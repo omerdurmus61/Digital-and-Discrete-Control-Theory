@@ -29,6 +29,8 @@ ti = 0;
 
 t = [ti:dt:tf-dt]';
 
+system_coef = -5;
+
 %% how many points are utilized in the loop
 
 length_of_loop = (tf - ti)/dt;
@@ -42,8 +44,8 @@ X_t_b = zeros(length_of_loop,1);
 X_t_b(1,1) = x_0;
 
 for k = 2 : 1 : length_of_loop
-    X_t_b(k,1) = X_t_b(k-1,1) + dt*(-5)*X_t_b(k-1,1);
-    %%X_t_b(k,1) = X_t_b(k-1,1) * (1 - 5*dt); %% same equation
+    X_t_b(k,1) = X_t_b(k-1,1) + dt*system_coef*X_t_b(k-1,1);
+    %%X_t_b(k,1) = X_t_b(k-1,1) * (1 + system_coef*dt); %% same equation
 end
 
 hold on;
@@ -57,7 +59,7 @@ X_t_f = zeros(length_of_loop);
 X_t_f(1,1) = x_0;
 
 for k = 1 : 1 : length_of_loop -1
-    X_t_f(k+1,1) = X_t_f(k,1) + dt*(-5)*X_t_f(k,1);
+    X_t_f(k+1,1) = X_t_f(k,1) + dt*system_coef*X_t_f(k,1);
 end
 
 hold on;
@@ -72,7 +74,7 @@ X_t_c(1,1) = x_0;
 X_t_c(2,1) = x_0 + dt*x_0*(-5)/5;
 
 for k = 2 : 1 :length_of_loop -1 
-    X_t_c(k+1,1) = X_t_c(k-1,1) + 2*dt*(-5)*X_t_c(k-1,1);
+    X_t_c(k+1,1) = X_t_c(k-1,1) + 2*dt*system_coef*X_t_c(k-1,1);
 end
 
 hold on;
